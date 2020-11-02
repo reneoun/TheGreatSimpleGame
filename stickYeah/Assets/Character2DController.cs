@@ -11,6 +11,7 @@ public class Character2DController : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private Vector3 characterScale;
     private bool lookright = true;
+    private bool isNeutral = true;
 
     private bool onGround = false;
     public Transform groundCheck;
@@ -32,7 +33,10 @@ public class Character2DController : MonoBehaviour
     void Update()
     {
         onGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-
+        
+        isNeutral = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) ? false : true; 
+        animator.SetBool("neutral", isNeutral);
+        
         extraJumps = onGround ? 1 : extraJumps;
 
         var movement = Input.GetAxis("Horizontal");
