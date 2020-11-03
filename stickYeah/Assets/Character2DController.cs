@@ -119,6 +119,6 @@ public class Character2DController : MonoBehaviour
     private void takeDamage() {
         curHealth -= 10;
         curHealth = curHealth < 0 ? 100 : curHealth;
-        healthBar.setHealth(curHealth);
+        healthBar.SetHealth(curHealth);
     }
 }
