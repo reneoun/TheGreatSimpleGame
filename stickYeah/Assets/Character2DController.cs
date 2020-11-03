@@ -43,7 +43,7 @@ public class Character2DController : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         onGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
         
@@ -55,24 +55,23 @@ public class Character2DController : MonoBehaviour
         }
         animator.SetBool("neutral", isNeutral);
 
-        if (onGround)
-        {
-            extraJumps = 1;
-            animator.SetBool("isJumping", false);
-        }
+        extraJumps = onGround ? 1 : extraJumps;
+        animator.SetBool("isJumping", !onGround);
+
 
         var movement = Input.GetAxis("Horizontal");
         transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MovementSpeed;
         animator.SetFloat("speed", Mathf.Abs(movement * MovementSpeed));
         //Debug.Log(Mathf.Abs(movement*MovementSpeed));
         // if (Input.GetButtonDown("Jump") && Mathf.Abs(_rigidbody.velocity.y) < 0.001f)
-        if (Input.GetButtonDown("Jump") && extraJumps > 0)
+        if (Input.GetButtonDown("Jump") & extraJumps > 0)
         {
             _rigidbody.AddForce(new Vector2(0,JumpForce), ForceMode2D.Impulse);
             animator.SetBool("isJumping", true);
             animator.SetBool("isRunning", false);
-            extraJumps--;
+            extraJumps-=1;
             Debug.Log("Jumping");
+            Debug.Log(extraJumps);
         }
 
 
