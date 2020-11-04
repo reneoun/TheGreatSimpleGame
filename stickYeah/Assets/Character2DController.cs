@@ -43,7 +43,7 @@ public class Character2DController : MonoBehaviour
 
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         onGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
         
@@ -86,7 +86,7 @@ public class Character2DController : MonoBehaviour
         characterScale.x = Input.GetAxis("Horizontal") > 0 ? 1 : characterScale.x;
         transform.localScale = characterScale;
 
-        if (transform.position.y < -4.5f) {
+        if (transform.position.y < -10f) {
             transform.position =  RespawnPoint;
             takeDamage();
         }
